@@ -1,0 +1,192 @@
+function createLunchForm() {
+
+  var form = FormApp.create('Chicken Salad Chick Lunch V2');
+  form.setDescription(
+    'Social Committee will be doing a lunch order-in on Thursday, May 21. ' +
+    'Please use the form below to submit your boxed lunch order. ' +
+    'All boxed lunch orders include a pickle and cookie. ' +
+    'Orders are due by 2:45pm on Monday, May 18.'
+  );
+  form.setCollectEmail(true);
+
+  // -------------------------------------------------------
+  // DATA
+  // -------------------------------------------------------
+
+  var sandwichOptions = [
+    'Barbie Q - White', 'Barbie Q - Wheatberry', 'Barbie Q - Croissant',
+    'Buffalo Barclay - White', 'Buffalo Barclay - Wheatberry', 'Buffalo Barclay - Croissant',
+    'Classic Carol - White', 'Classic Carol - Wheatberry', 'Classic Carol - Croissant',
+    'Cranberry Kelli - White', 'Cranberry Kelli - Wheatberry', 'Cranberry Kelli - Croissant',
+    'Dixie Chick - White', 'Dixie Chick - Wheatberry', 'Dixie Chick - Croissant',
+    'Fancy Nancy - White', 'Fancy Nancy - Wheatberry', 'Fancy Nancy - Croissant',
+    'Fruity Fran - White', 'Fruity Fran - Wheatberry', 'Fruity Fran - Croissant',
+    'Jalapeno Holly - White', 'Jalapeno Holly - Wheatberry', 'Jalapeno Holly - Croissant',
+    "Kickin' Kay Lynne - White", "Kickin' Kay Lynne - Wheatberry", "Kickin' Kay Lynne - Croissant",
+    "Lauryn's Lemon Basil - White", "Lauryn's Lemon Basil - Wheatberry", "Lauryn's Lemon Basil - Croissant",
+    "Olivia's Old South - White", "Olivia's Old South - Wheatberry", "Olivia's Old South - Croissant",
+    'Pimento Cheese - White', 'Pimento Cheese - Wheatberry', 'Pimento Cheese - Croissant',
+    'Sassy Scotty - White', 'Sassy Scotty - Wheatberry', 'Sassy Scotty - Croissant',
+    'Spicy Pimento Cheese - White', 'Spicy Pimento Cheese - Wheatberry', 'Spicy Pimento Cheese - Croissant',
+    'Jill Pickle - White', 'Jill Pickle - Wheatberry', 'Jill Pickle - Croissant'
+  ];
+
+  var scoopOptions = [
+    'Barbie Q', 'Buffalo Barclay', 'Classic Carol', 'Cranberry Kelli',
+    'Fancy Nancy', 'Fruity Fran', 'Jalapeno Holly', "Kickin' Kay Lynne",
+    "Lauryn's Lemon Basil", "Olivia's Old South", 'Pimento Cheese',
+    'Sassy Scotty', 'Spicy Pimento Cheese', 'Jill Pickle'
+  ];
+
+  var bltOptions = [
+    'Barbie Q BLT - White', 'Barbie Q BLT - Wheatberry', 'Barbie Q BLT - Croissant',
+    'Buffalo Barclay BLT - White', 'Buffalo Barclay BLT - Wheatberry', 'Buffalo Barclay BLT - Croissant',
+    'Classic Carol BLT - White', 'Classic Carol BLT - Wheatberry', 'Classic Carol BLT - Croissant',
+    'Cranberry Kelli BLT - White', 'Cranberry Kelli BLT - Wheatberry', 'Cranberry Kelli BLT - Croissant',
+    'Dixie Chick BLT - White', 'Dixie Chick BLT - Wheatberry', 'Dixie Chick BLT - Croissant',
+    'Fancy Nancy BLT - White', 'Fancy Nancy BLT - Wheatberry', 'Fancy Nancy BLT - Croissant',
+    'Fruity Fran BLT - White', 'Fruity Fran BLT - Wheatberry', 'Fruity Fran BLT - Croissant',
+    'Jalapeno Holly BLT - White', 'Jalapeno Holly BLT - Wheatberry', 'Jalapeno Holly BLT - Croissant',
+    "Kickin' Kay Lynne BLT - White", "Kickin' Kay Lynne BLT - Wheatberry", "Kickin' Kay Lynne BLT - Croissant",
+    "Lauryn's Lemon Basil BLT - White", "Lauryn's Lemon Basil BLT - Wheatberry", "Lauryn's Lemon Basil BLT - Croissant",
+    "Olivia's Old South BLT - White", "Olivia's Old South BLT - Wheatberry", "Olivia's Old South BLT - Croissant",
+    'Pimento Cheese BLT - White', 'Pimento Cheese BLT - Wheatberry', 'Pimento Cheese BLT - Croissant',
+    'Sassy Scotty BLT - White', 'Sassy Scotty BLT - Wheatberry', 'Sassy Scotty BLT - Croissant',
+    'Spicy Pimento Cheese BLT - White', 'Spicy Pimento Cheese BLT - Wheatberry', 'Spicy Pimento Cheese BLT - Croissant',
+    'Jill Pickle BLT - White', 'Jill Pickle BLT - Wheatberry', 'Jill Pickle BLT - Croissant',
+    'Turkey Club - with Provolone - White', 'Turkey Club - with Provolone - Wheatberry', 'Turkey Club - with Provolone - Croissant',
+    'Turkey Club (No Cheese) - White', 'Turkey Club (No Cheese) - Wheatberry', 'Turkey Club (No Cheese) - Croissant'
+  ];
+
+  var sideOptions = [
+    'Fresh Fruit',
+    'Broccoli Salad',
+    'Pasta Salad',
+    'Grape Salad',
+    'Baked Lays Potato Chips',
+    'BBQ Potato Chips',
+    'Doritos',
+    'Jalapeño Potato Chips',
+    'Salt & Vinegar Potato Chips',
+    'Sea Salt Potato Chips',
+    'Spicy Dill Pickle Potato Chips'
+  ];
+
+  // -------------------------------------------------------
+  // HELPERS
+  // -------------------------------------------------------
+
+  function addOneSidePicker(form) {
+    form.addMultipleChoiceItem()
+      .setTitle('Choose Your Side')
+      .setChoiceValues(sideOptions)
+      .setRequired(true);
+  }
+
+  function addTwoSidesPicker(form) {
+    var validation = FormApp.createCheckboxValidation()
+      .setHelpText('Please select exactly 2 sides.')
+      .requireSelectExactly(2)
+      .build();
+    form.addCheckboxItem()
+      .setTitle('Pick Your 2 Sides')
+      .setChoiceValues(sideOptions)
+      .setRequired(true)
+      .setValidation(validation);
+  }
+
+  // -------------------------------------------------------
+  // Q1: Style + Entree Type (branches to 6 sections)
+  // -------------------------------------------------------
+
+  var styleItem = form.addMultipleChoiceItem();
+  styleItem.setTitle('What Would You Like?').setRequired(true);
+
+  // -------------------------------------------------------
+  // SECTION A: Sandwich - 1 Side
+  // -------------------------------------------------------
+  var secA = form.addPageBreakItem().setTitle('Chicken Salad Sandwich with 1 Side');
+  form.addMultipleChoiceItem()
+    .setTitle('Choose Your Flavor & Bread')
+    .setChoiceValues(sandwichOptions)
+    .setRequired(true);
+  addOneSidePicker(form);
+
+  // -------------------------------------------------------
+  // SECTION B: Sandwich - 2 Sides
+  // -------------------------------------------------------
+  var secB = form.addPageBreakItem().setTitle('Chicken Salad Sandwich with 2 Sides');
+  form.addMultipleChoiceItem()
+    .setTitle('Choose Your Flavor & Bread')
+    .setChoiceValues(sandwichOptions)
+    .setRequired(true);
+  addTwoSidesPicker(form);
+
+  // -------------------------------------------------------
+  // SECTION C: Scoop - 1 Side
+  // -------------------------------------------------------
+  var secC = form.addPageBreakItem().setTitle('Scoop with Crackers and 1 Side');
+  form.addMultipleChoiceItem()
+    .setTitle('Choose Your Flavor')
+    .setChoiceValues(scoopOptions)
+    .setRequired(true);
+  addOneSidePicker(form);
+
+  // -------------------------------------------------------
+  // SECTION D: Scoop - 2 Sides
+  // -------------------------------------------------------
+  var secD = form.addPageBreakItem().setTitle('Scoop with Crackers and 2 Sides');
+  form.addMultipleChoiceItem()
+    .setTitle('Choose Your Flavor')
+    .setChoiceValues(scoopOptions)
+    .setRequired(true);
+  addTwoSidesPicker(form);
+
+  // -------------------------------------------------------
+  // SECTION E: Signature / BLT - 1 Side
+  // -------------------------------------------------------
+  var secE = form.addPageBreakItem().setTitle('Signature Sandwich / BLT with 1 Side');
+  form.addMultipleChoiceItem()
+    .setTitle('Choose Your Sandwich')
+    .setChoiceValues(bltOptions)
+    .setRequired(true);
+  addOneSidePicker(form);
+
+  // -------------------------------------------------------
+  // SECTION F: Signature / BLT - 2 Sides
+  // -------------------------------------------------------
+  var secF = form.addPageBreakItem().setTitle('Signature Sandwich / BLT with 2 Sides');
+  form.addMultipleChoiceItem()
+    .setTitle('Choose Your Sandwich')
+    .setChoiceValues(bltOptions)
+    .setRequired(true);
+  addTwoSidesPicker(form);
+
+  // -------------------------------------------------------
+  // END SECTION
+  // -------------------------------------------------------
+  var secEnd = form.addPageBreakItem().setTitle('End');
+
+  // -------------------------------------------------------
+  // WIRE UP BRANCHING
+  // -------------------------------------------------------
+  styleItem.setChoices([
+    styleItem.createChoice('Chicken Salad Sandwich - 1 Side ($11.50)', secA),
+    styleItem.createChoice('Chicken Salad Sandwich - 2 Sides ($13.50)', secB),
+    styleItem.createChoice('Scoop with Crackers - 1 Side ($11.50)', secC),
+    styleItem.createChoice('Scoop with Crackers - 2 Sides ($13.50)', secD),
+    styleItem.createChoice('Signature Sandwich / BLT - 1 Side ($13.50)', secE),
+    styleItem.createChoice('Signature Sandwich / BLT - 2 Sides ($15.50)', secF)
+  ]);
+
+  // All 6 paths go directly to End after sides are picked
+  secA.setGoToPage(secEnd);
+  secB.setGoToPage(secEnd);
+  secC.setGoToPage(secEnd);
+  secD.setGoToPage(secEnd);
+  secE.setGoToPage(secEnd);
+  secF.setGoToPage(secEnd);
+
+  Logger.log('Edit URL: ' + form.getEditUrl());
+  Logger.log('Published URL: ' + form.getPublishedUrl());
+}

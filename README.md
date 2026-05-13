@@ -45,10 +45,10 @@ To change the form description and deadline, update the `form.setDescription()` 
 
 ## Menu context
 
-Built against the Chicken Salad Chick catering menu (Centerville, OH location). Menu options extracted from the live ordering page HTML via browser DevTools. If CSC has updated their menu since this was written, update the arrays accordingly.
+Built against the Chicken Salad Chick catering menu. Menu options extracted from the live ordering page HTML via browser DevTools. If CSC has updated their menu since this was written, update the arrays accordingly.
 
 Notably: Dixie Chick is not available as a scoop. This is reflected correctly in `scoopOptions`.
 
 ## Related
 
-Full writeup of how this came together — including the Microsoft Forms detour, the Form Migrator betrayal, the combinatorics crisis, and the `CONTINUE` routing bug — published on Medium under the S.A. Routh byline.
+Full writeup of how this came together — including the Microsoft Forms detour, the Form Migrator betrayal, the combinatorics crisis, and the `CONTINUE` routing bug — will be published on Medium under S.A. Routh
